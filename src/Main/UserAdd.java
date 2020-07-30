@@ -5,16 +5,20 @@
  */
 package Main;
 
+import com.mysql.jdbc.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.Color;
+import java.awt.Image;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
@@ -26,6 +30,7 @@ import javax.swing.text.PlainDocument;
 public class UserAdd extends javax.swing.JFrame {
 
     public static boolean validation_check = true;
+    public static int USER_ID;
 
     public UserAdd() {
         initComponents();
@@ -376,18 +381,22 @@ form_submit.addActionListener(new java.awt.event.ActionListener() {
             conn.setAutoCommit(false);
 
             //first query to insert into the user table
-            PreparedStatement pst = conn.prepareStatement("insert into users values (default, ?)");
+            PreparedStatement pst = conn.prepareStatement("insert into users values (default, ?)", Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, General.userToString(user));
             int r = pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            while (rs.next()) {
+                USER_ID = rs.getInt(1);
+            }
 
-            //second query to edit the JSON file to add the user_id in it
-            PreparedStatement pst2 = conn.prepareStatement("UPDATE `users` SET `user_data`= (SELECT JSON_REPLACE((SELECT user_data FROM users WHERE user_id= (SELECT LAST_INSERT_ID())), '$.id', (SELECT LAST_INSERT_ID()))) WHERE user_id= (SELECT LAST_INSERT_ID())");
-            //UPDATE `users` SET `user_id`= (SELECT JSON_REPLACE((SELECT user_data FROM users WHERE user_id=1000000001), '$.id', 657)) WHERE user_id=1000000001;
-            int r2 = pst2.executeUpdate();
+            //third query to edit the JSON file to add the user_id in it
+            PreparedStatement pst3 = conn.prepareStatement("UPDATE `users` SET `user_data`= (SELECT JSON_REPLACE((SELECT user_data FROM users WHERE user_id= (SELECT LAST_INSERT_ID())), '$.id', (SELECT LAST_INSERT_ID()))) WHERE user_id= (SELECT LAST_INSERT_ID())");
+            int r3 = pst3.executeUpdate();
 
             conn.commit();
-            if (r > 0 && r2 > 0) {
+            if (r > 0 && r3 > 0) {
                 System.out.println("success");
+
             }
 
         } catch (SQLException ex) {
@@ -395,6 +404,10 @@ form_submit.addActionListener(new java.awt.event.ActionListener() {
         }
 
     }//GEN-LAST:event_form_submitActionPerformed
+
+    public static int getID() {
+        return USER_ID;
+    }
 
     class UpperCaseDocument extends PlainDocument {
 

@@ -7,12 +7,16 @@ package Main;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
 
 /**
  *
@@ -21,9 +25,12 @@ import java.util.List;
 public class TempMain {
 
     /**
+     * @param barcodeText
      * @param args the command line arguments
+     * @return
+     * @throws java.lang.Exception
      */
-    public static void main(String[] args) throws JsonProcessingException, SQLException {
+    public static void main(String[] args) throws JsonProcessingException, SQLException, Exception {
 //        List<String> genreList = new ArrayList<String>();
 //        genreList.add("fiction");
 //        genreList.add("comics");
@@ -99,9 +106,9 @@ public class TempMain {
 //        LocalDateTime timeNow = General.stringToDate(General.getFormattedTimestamp());
 //        Duration duration = Duration.between(timeNow, checkoutTime);
 //        System.out.println(duration.toDays());
-        long phoneNum = 123456789L;
-        System.out.println(String.valueOf(phoneNum).replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1)-$2-$3"));
-
+//        long phoneNum = 123456789L;
+//        System.out.println(String.valueOf(phoneNum).replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1)-$2-$3"));
+//        System.out.println(generateBarcode("234333333444"));
     }
 
 }

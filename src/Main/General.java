@@ -8,6 +8,7 @@ package Main;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,6 +22,9 @@ import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
 import org.json.JSONObject;
 
 /**
@@ -136,5 +140,11 @@ public class General {
             result = false;
         }
         return result;
+    }
+
+    public static BufferedImage generateBarcode(String barcodeText) throws Exception {
+        Barcode barcode = BarcodeFactory.createCode128(barcodeText);
+        barcode.setResolution(500);
+        return BarcodeImageHandler.getImage(barcode);
     }
 }
