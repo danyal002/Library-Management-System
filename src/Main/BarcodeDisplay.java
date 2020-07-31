@@ -6,6 +6,8 @@
 package Main;
 
 import java.awt.Color;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -18,11 +20,14 @@ public class BarcodeDisplay extends javax.swing.JFrame {
 
     /**
      * Creates new form barcodeDisplay
+     *
+     * @throws java.lang.Exception
      */
     public BarcodeDisplay() throws Exception {
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
-        usr_barcode.setIcon(new ImageIcon(General.generateBarcode(Integer.toString(UserAdd.getID()))));
+        //usr_barcode.setIcon(new ImageIcon(General.generateBarcode(Integer.toString(UserAdd.getID()))));
+        usr_barcode.setIcon(new ImageIcon(General.generateCode128("234523456767")));
     }
 
     /**
@@ -35,30 +40,41 @@ public class BarcodeDisplay extends javax.swing.JFrame {
     private void initComponents() {
 
         usr_barcode = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         usr_barcode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        usr_barcode.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                usr_barcodeMouseClicked(evt);
+        getContentPane().add(usr_barcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 670, 150));
+
+        jLabel13.setFont(new java.awt.Font("Courier", 1, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 205, 60));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Memeber Added Successfully");
+        jLabel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 205, 60), 2, true));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 390, 40));
+
+        jButton1.setText("Print Barcode");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(usr_barcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 430, 140));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, 40));
 
         setSize(new java.awt.Dimension(669, 356));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usr_barcodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usr_barcodeMouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            ImageIcon icon = new ImageIcon(General.generateBarcode("1000000001"));
-            usr_barcode.setIcon(icon);
-        } catch (Exception ex) {
-            Logger.getLogger(UserAdd.class.getName()).log(Level.SEVERE, null, ex);
+            Printer.printComponent(usr_barcode, true);
+        } catch (PrinterException ex) {
+            Logger.getLogger(BarcodeDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_usr_barcodeMouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -90,6 +106,7 @@ public class BarcodeDisplay extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new BarcodeDisplay().setVisible(true);
@@ -101,6 +118,8 @@ public class BarcodeDisplay extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel usr_barcode;
     // End of variables declaration//GEN-END:variables
 }

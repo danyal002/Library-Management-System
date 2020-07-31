@@ -26,6 +26,9 @@ import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
 import org.json.JSONObject;
+import org.krysalis.barcode4j.impl.code128.Code128;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 
 /**
  *
@@ -147,4 +150,12 @@ public class General {
         barcode.setResolution(500);
         return BarcodeImageHandler.getImage(barcode);
     }
+
+    public static BufferedImage generateCode128(String barcodeText) {
+        Code128Bean bg = new Code128Bean();
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(200, BufferedImage.TYPE_BYTE_GRAY, false, 0);
+        bg.generateBarcode(canvas, barcodeText);
+        return canvas.getBufferedImage();
+    }
+
 }

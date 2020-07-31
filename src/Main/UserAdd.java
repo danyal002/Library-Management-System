@@ -389,17 +389,22 @@ form_submit.addActionListener(new java.awt.event.ActionListener() {
                 USER_ID = rs.getInt(1);
             }
 
-            //third query to edit the JSON file to add the user_id in it
-            PreparedStatement pst3 = conn.prepareStatement("UPDATE `users` SET `user_data`= (SELECT JSON_REPLACE((SELECT user_data FROM users WHERE user_id= (SELECT LAST_INSERT_ID())), '$.id', (SELECT LAST_INSERT_ID()))) WHERE user_id= (SELECT LAST_INSERT_ID())");
-            int r3 = pst3.executeUpdate();
+            //second query to edit the JSON file to add the user_id in it
+            PreparedStatement pst2 = conn.prepareStatement("UPDATE `users` SET `user_data`= (SELECT JSON_REPLACE((SELECT user_data FROM users WHERE user_id= (SELECT LAST_INSERT_ID())), '$.id', (SELECT LAST_INSERT_ID()))) WHERE user_id= (SELECT LAST_INSERT_ID())");
+            int r2 = pst2.executeUpdate();
 
             conn.commit();
-            if (r > 0 && r3 > 0) {
+            if (r > 0 && r2 > 0) {
                 System.out.println("success");
-
+                BarcodeDisplay bd = new BarcodeDisplay();
+                bd.setVisible(true);
+                bd.setAlwaysOnTop(true);
+                this.dispose();
             }
 
         } catch (SQLException ex) {
+            Logger.getLogger(UserAdd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(UserAdd.class.getName()).log(Level.SEVERE, null, ex);
         }
 
