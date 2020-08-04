@@ -7,7 +7,6 @@ package Main;
 
 import java.awt.Color;
 import java.awt.print.PrinterException;
-import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -27,7 +26,7 @@ public class BarcodeDisplay extends javax.swing.JFrame {
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
         //usr_barcode.setIcon(new ImageIcon(General.generateBarcode(Integer.toString(UserAdd.getID()))));
-        usr_barcode.setIcon(new ImageIcon(General.generateCode128("234523456767")));
+        usr_barcode.setIcon(new ImageIcon(General.generateCode128Barcode("234523456767")));
     }
 
     /**

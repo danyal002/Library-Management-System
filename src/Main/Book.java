@@ -18,7 +18,6 @@ public class Book {
     long isbn;
     String name;
     String author;
-    int rating;
     String publisher;
     String datePublished;
     String dateAdded;
@@ -27,11 +26,10 @@ public class Book {
     int currentStock;
 
     //Constructor
-    public Book(long isbn, String name, String author, int rating, String publisher, String datePublished, String dateAdded, int copiesOwned, ArrayList<String> genre, int currentStock) {
+    public Book(long isbn, String name, String author, String publisher, String datePublished, String dateAdded, int copiesOwned, ArrayList<String> genre, int currentStock) {
         this.isbn = isbn;
         this.name = name;
         this.author = author;
-        this.rating = rating;
         this.publisher = publisher;
         this.datePublished = datePublished;
         this.dateAdded = dateAdded;
@@ -51,10 +49,6 @@ public class Book {
 
     public String getAuthor() {
         return author;
-    }
-
-    public int getRating() {
-        return rating;
     }
 
     public String getPublisher() {
@@ -84,10 +78,6 @@ public class Book {
 //Setter methods for this class
     public void setISBN(long x) {
         isbn = x;
-    }
-
-    public void setRating(int x) {
-        rating = x;
     }
 
     public void setCopiesOwned(int x) {

@@ -22,11 +22,7 @@ import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import net.sourceforge.barbecue.Barcode;
-import net.sourceforge.barbecue.BarcodeFactory;
-import net.sourceforge.barbecue.BarcodeImageHandler;
 import org.json.JSONObject;
-import org.krysalis.barcode4j.impl.code128.Code128;
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 
@@ -145,13 +141,7 @@ public class General {
         return result;
     }
 
-    public static BufferedImage generateBarcode(String barcodeText) throws Exception {
-        Barcode barcode = BarcodeFactory.createCode128(barcodeText);
-        barcode.setResolution(500);
-        return BarcodeImageHandler.getImage(barcode);
-    }
-
-    public static BufferedImage generateCode128(String barcodeText) {
+    public static BufferedImage generateCode128Barcode(String barcodeText) {
         Code128Bean bg = new Code128Bean();
         BitmapCanvasProvider canvas = new BitmapCanvasProvider(200, BufferedImage.TYPE_BYTE_GRAY, false, 0);
         bg.generateBarcode(canvas, barcodeText);
